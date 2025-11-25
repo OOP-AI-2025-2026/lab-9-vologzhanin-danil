@@ -219,9 +219,8 @@ public class Task {
 
     /**
      * Завдання 12. Перевіряє, чи є всі значення (values) унікальними.
-     * СИГНАТУРА: Map<String, String> (для компіляції)
      */
-    public static boolean isUnique(Map<String, String> map) {
+    public static boolean isUnique(Map<String, String> map) { // <--- ПОВЕРТАЄМО НА String
         if (map.isEmpty()) {
             return true;
         }
