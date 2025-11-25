@@ -253,10 +253,9 @@ public class Task {
 
     /**
      * Завдання 13. Повертає Map, що є перетином двох вхідних Map<String, String>.
-     * ПРИМІТКА: Виправлено сигнатуру Map<String, Integer> -> Map<String, String>,
-     * щоб відповідати стандартному завданню. Якщо у вас Map<String, Integer>, змініть типи.
      */
     public static Map<String, String> intersect(Map<String, String> map1, Map<String, String> map2) {
+        // Змінюємо тип повернення та вхідні типи на Map<String, String>
         Map<String, String> intersectionMap = new HashMap<>();
 
         for (Entry<String, String> entry : map1.entrySet()) {
