@@ -239,13 +239,15 @@ public class Task {
 
     /**
      * Завдання 12. Перевіряє, чи є всі значення (values) унікальними.
+     * СИГНАТУРА ВИПРАВЛЕНА ЗГІДНО З ВИМОГАМИ КОМПІЛЯТОРА ТЕСТІВ.
+     * Якщо тести вимагають String, ми використовуємо String.
      */
-    public static boolean isUnique(Map<String, String> map) {
+    public static boolean isUnique(Map<String, String> map) { // <-- ПОВЕРНЕНО НА String
         if (map.isEmpty()) {
             return true;
         }
 
-        // Порівнюємо кількість ключів (map.size()) з кількістю унікальних значень
+        // Тепер унікальні значення це Set<String>
         Set<String> uniqueValues = new HashSet<>(map.values());
 
         return map.size() == uniqueValues.size();
@@ -254,15 +256,13 @@ public class Task {
     /**
      * Завдання 13. Повертає Map, що є перетином двох вхідних Map<String, String>.
      */
-    public static Map<String, String> intersect(Map<String, String> map1, Map<String, String> map2) {
-        // Змінюємо тип повернення та вхідні типи на Map<String, String>
+    public static Map<String, String> intersect(Map<String, String> map1, Map<String, String> map2) { // <-- String, String
         Map<String, String> intersectionMap = new HashMap<>();
 
         for (Entry<String, String> entry : map1.entrySet()) {
             String key = entry.getKey();
             String value = entry.getValue();
 
-            // Ключ має існувати в map2 І значення має збігатися
             if (map2.containsKey(key) && map2.get(key).equals(value)) {
                 intersectionMap.put(key, value);
             }
