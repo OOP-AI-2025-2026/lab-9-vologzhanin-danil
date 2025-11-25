@@ -2,7 +2,7 @@ package ua.opnu;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.Arrays; // <-- ДОДАНО: Для роботи з Arrays.asList()
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -16,7 +16,7 @@ import java.util.Map.Entry;
 public class Task {
 
     // =================================================================
-    // МЕТОДИ ДЛЯ LIST (Завдання 1 - 5)
+    // МЕТОДИ ДЛЯ LIST (Завдання 1 - 5) - ЗАЛИШЕНІ БЕЗ ЗМІН
     // =================================================================
 
     /**
@@ -24,19 +24,15 @@ public class Task {
      * Якщо довжини рівні, видаляє перший рядок з пари.
      */
     public static void removeShorterStrings(List<String> list) {
-        // Проходимо попарно: i = 0, 2, 4, ...
         for (int i = 0; i < list.size() - 1; i += 1) {
             String str1 = list.get(i);
             String str2 = list.get(i + 1);
 
             if (str1.length() <= str2.length()) {
-                // Видаляємо str1 (коротший або однакової довжини)
                 list.remove(i);
             } else {
-                // Видаляємо str2
                 list.remove(i + 1);
             }
-            // Цикл перейде до наступної пари (i += 1)
         }
     }
 
@@ -46,9 +42,7 @@ public class Task {
     public static void stutter(List<String> list) {
         int originalSize = list.size();
         for (int i = 0; i < originalSize; i++) {
-            // Беремо елемент з початку
             String element = list.get(i * 2);
-            // Додаємо дублікат елемента одразу після нього
             list.add(i * 2 + 1, element);
         }
     }
@@ -57,9 +51,7 @@ public class Task {
      * Завдання 3. Попарно змінює елементи місцями.
      */
     public static void switchPairs(List<String> list) {
-        // Рухаємось попарно: i = 0, 2, 4, ...
         for (int i = 0; i < list.size() - 1; i += 2) {
-            // Обмін елементами
             String temp = list.get(i);
             list.set(i, list.get(i + 1));
             list.set(i + 1, temp);
@@ -70,16 +62,13 @@ public class Task {
      * Завдання 4. Видаляє дублікати з відсортованого списку.
      */
     public static void removeDuplicates(List<String> list) {
-        // Починаємо з індексу 1 і порівнюємо з попереднім
         for (int i = 1; i < list.size();) {
             String current = list.get(i);
             String previous = list.get(i - 1);
 
             if (current.equals(previous)) {
-                // Якщо дублікат, видаляємо і НЕ збільшуємо i
                 list.remove(i);
             } else {
-                // Якщо не дублікат, переходимо до наступного
                 i++;
             }
         }
@@ -91,21 +80,18 @@ public class Task {
     public static void markLength4(List<String> list) {
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i).length() == 4) {
-                // Додаємо "****" перед елементом
                 list.add(i, "****");
-                // Збільшуємо індекс на 1, щоб пропустити доданий елемент
                 i++;
             }
         }
     }
 
     // =================================================================
-    // МЕТОДИ ДЛЯ QUEUE (Завдання 6 - 8)
+    // МЕТОДИ ДЛЯ QUEUE (Завдання 6 - 8) - ЗАЛИШЕНІ БЕЗ ЗМІН
     // =================================================================
 
     /**
      * Завдання 6. Перевіряє, чи є черга паліндромом.
-     * Використовує ArrayDeque як стек. Вхідна черга відновлюється.
      */
     public static boolean isPalindrome(Queue<Integer> queue) {
         if (queue.isEmpty()) {
@@ -115,7 +101,6 @@ public class Task {
         ArrayDeque<Integer> stack = new ArrayDeque<>();
         List<Integer> tempQueueList = new ArrayList<>();
 
-        // Крок 1: Зберігаємо елементи в стек (зворотний порядок) та лист (для відновлення)
         while (!queue.isEmpty()) {
             int element = queue.poll();
             tempQueueList.add(element);
@@ -124,9 +109,8 @@ public class Task {
 
         boolean isPalindrome = true;
 
-        // Крок 2: Відновлюємо чергу та порівнюємо
         for (int element : tempQueueList) {
-            queue.offer(element); // Відновлюємо чергу
+            queue.offer(element);
             if (element != stack.pop()) {
                 isPalindrome = false;
             }
@@ -137,7 +121,6 @@ public class Task {
 
     /**
      * Завдання 7. Пересортовує чергу за зростанням (з урахуванням знака).
-     * Вхідна черга відсортована за абсолютним значенням.
      */
     public static void reorder(Queue<Integer> queue) {
         if (queue.isEmpty()) {
@@ -151,13 +134,12 @@ public class Task {
         for (int i = 0; i < size; i++) {
             int element = queue.poll();
             if (element < 0) {
-                negatives.offer(element); // У чергу негативних
+                negatives.offer(element);
             } else {
-                positives.offer(element); // У чергу позитивних
+                positives.offer(element);
             }
         }
 
-        // Спочатку додаємо негативні (вони вже відсортовані), потім позитивні
         queue.addAll(negatives);
         queue.addAll(positives);
     }
@@ -176,17 +158,17 @@ public class Task {
         for (int i = 0; i < size; i++) {
             int element = queue.poll();
             if (element % 2 == 0) {
-                queue.offer(element); // Парні залишаються в черзі
+                queue.offer(element);
             } else {
-                odds.offer(element); // Непарні йдуть у допоміжну чергу
+                odds.offer(element);
             }
         }
 
-        queue.addAll(odds); // Додаємо непарні в кінець
+        queue.addAll(odds);
     }
 
     // =================================================================
-    // МЕТОДИ ДЛЯ SET (Завдання 9 - 11)
+    // МЕТОДИ ДЛЯ SET (Завдання 9 - 11) - ЗАЛИШЕНІ БЕЗ ЗМІН
     // =================================================================
 
     /**
@@ -223,40 +205,36 @@ public class Task {
      * Завдання 11. Повертає кількість унікальних цілих чисел, які зустрічаються в обох списках.
      */
     public static int numInCommon(List<Integer> list1, List<Integer> list2) {
-        // Використовуємо Set для отримання унікальних елементів
         Set<Integer> set1 = new HashSet<>(list1);
         Set<Integer> set2 = new HashSet<>(list2);
 
-        // retainAll залишає в set1 лише спільні елементи (перетин)
         set1.retainAll(set2);
 
         return set1.size();
     }
 
     // =================================================================
-    // МЕТОДИ ДЛЯ MAP (Завдання 12 - 16)
+    // МЕТОДИ ДЛЯ MAP (Завдання 12 - 16) - ВИПРАВЛЕННЯ СИГНАТУР
     // =================================================================
 
     /**
      * Завдання 12. Перевіряє, чи є всі значення (values) унікальними.
-     * СИГНАТУРА ВИПРАВЛЕНА ЗГІДНО З ВИМОГАМИ КОМПІЛЯТОРА ТЕСТІВ.
-     * Якщо тести вимагають String, ми використовуємо String.
+     * СИГНАТУРА: Map<String, String> (для компіляції)
      */
-    public static boolean isUnique(Map<String, String> map) { // <-- ПОВЕРНЕНО НА String
+    public static boolean isUnique(Map<String, String> map) {
         if (map.isEmpty()) {
             return true;
         }
 
-        // Тепер унікальні значення це Set<String>
         Set<String> uniqueValues = new HashSet<>(map.values());
-
         return map.size() == uniqueValues.size();
     }
 
     /**
      * Завдання 13. Повертає Map, що є перетином двох вхідних Map<String, String>.
+     * СИГНАТУРА: Map<String, String> (для компіляції)
      */
-    public static Map<String, String> intersect(Map<String, String> map1, Map<String, String> map2) { // <-- String, String
+    public static Map<String, String> intersect(Map<String, String> map1, Map<String, String> map2) {
         Map<String, String> intersectionMap = new HashMap<>();
 
         for (Entry<String, String> entry : map1.entrySet()) {
@@ -273,19 +251,16 @@ public class Task {
 
     /**
      * Завдання 14. Змінює ключі та значення місцями.
-     * СИГНАТУРА ПРИМУСОВО ЗМІНЕНА для проходження компіляції тестів.
-     * Може викликати помилку юніт тестів, але має пройти компіляцію.
+     * СИГНАТУРА ВИПРАВЛЕНА НА: Map<String, Integer>
      */
-    public static Map<String, String> reverse(Map<Integer, String> map) {
-        // Ми змушені повернути Map<String, String>, щоб пройти компіляцію тестів.
-        Map<String, String> reversedMap = new HashMap<>();
+    public static Map<String, Integer> reverse(Map<Integer, String> map) {
+        Map<String, Integer> reversedMap = new HashMap<>();
 
         for (Entry<Integer, String> entry : map.entrySet()) {
             Integer key = entry.getKey();
             String value = entry.getValue();
 
-            // Перетворюємо ключ (Integer) на String для повернення Map<String, String>
-            reversedMap.put(value, key.toString());
+            reversedMap.put(value, key);
         }
 
         return reversedMap;
@@ -299,7 +274,6 @@ public class Task {
             return 0;
         }
 
-        // Крок 1: Підрахунок частоти кожного значення (Value)
         Map<Integer, Integer> frequencyMap = new HashMap<>();
         for (int value : map.values()) {
             frequencyMap.put(value, frequencyMap.getOrDefault(value, 0) + 1);
@@ -307,7 +281,6 @@ public class Task {
 
         int minFrequency = Integer.MAX_VALUE;
 
-        // Крок 2: Знаходимо мінімальну частоту
         for (int count : frequencyMap.values()) {
             if (count < minFrequency) {
                 minFrequency = count;
@@ -316,7 +289,6 @@ public class Task {
 
         int rarestValue = Integer.MAX_VALUE;
 
-        // Крок 3: Знаходимо найменше значення, що відповідає мінімальній частоті
         for (int value : frequencyMap.keySet()) {
             if (frequencyMap.get(value) == minFrequency) {
                 if (value < rarestValue) {
@@ -341,7 +313,6 @@ public class Task {
             frequencyMap.put(number, frequencyMap.getOrDefault(number, 0) + 1);
         }
 
-        // Знаходимо максимальне значення частоти
         return Collections.max(frequencyMap.values());
     }
 
