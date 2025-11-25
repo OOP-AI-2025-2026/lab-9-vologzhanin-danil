@@ -106,36 +106,37 @@ public class Task {
 
         Stack<Integer> s = new Stack<>();
         int size = q.size();
+        int nonNegatives = 0; // Кількість невід'ємних (>= 0)
 
+        // 1. Відділяємо: Від'ємні -> Стек, Невід'ємні -> Черга (на початок)
         for (int i = 0; i < size; i++) {
             int val = q.remove();
             if (val < 0) {
-                s.push(val);
+                s.push(val); // Від'ємні у зворотному порядку
             } else {
-                q.add(val);
+                q.add(val); // Невід'ємні у правильному порядку
+                nonNegatives++;
             }
         }
-        int nonNegatives = q.size();
 
-        for (int i = 0; i < nonNegatives; i++) {
-            q.add(q.remove());
-        }
-
+        // 2. Переміщуємо від'ємні з оберненим порядком у чергу
+        // q: [Невід'ємні] [Від'ємні в оберненому порядку]
         while (!s.isEmpty()) {
             q.add(s.pop());
         }
 
+        // 3. Зсуваємо від'ємні числа, щоб відновити їх порядок.
         int negatives = size - nonNegatives;
         for (int i = 0; i < negatives; i++) {
             s.push(q.remove());
         }
+        // q: [Невід'ємні], s: [Від'ємні] (у правильному порядку)
+
+        // 4. Повертаємо від'ємні на кінець черги
         while (!s.isEmpty()) {
             q.add(s.pop());
         }
-
-        for (int i = 0; i < nonNegatives; i++) {
-            q.add(q.remove());
-        }
+        // q: [Невід'ємні] [Від'ємні]
     }
 
     // --- Task 8: rearrange ---
@@ -148,36 +149,42 @@ public class Task {
         int initialSize = q.size();
         int evens = 0;
 
-        // 1. Відділити парні від непарних
-        // Непарні -> Черга (на початок), Парні -> Стек
+        // 1. Парні -> Стек, Непарні -> Черга (на початок)
         for (int i = 0; i < initialSize; i++) {
             int val = q.remove();
-            if (val % 2 == 0) { // Парні
+            if (val % 2 == 0) {
                 s.push(val);
                 evens++;
-            } else { // Непарні
+            } else {
                 q.add(val);
             }
         }
+        // q: [Непарні], s: [Парні в оберненому порядку]
 
-        //  q = [Непарні у порядку], s = [Парні у зворотному порядку]
-
-        // 2. Перемістити всі елементи в чергу
-        // Парні (зі стека) -> Кінець черги
+        // 2. Повертаємо парні з оберненим порядком у чергу
+        // q: [Непарні] [Парні в зворотному порядку]
         while (!s.isEmpty()) {
             q.add(s.pop());
         }
 
-        //  q = [Непарні] [Парні у правильному порядку]
+        // 3. Обертаємо парні числа (які знаходяться в кінці)
+        for (int i = 0; i < evens; i++) {
+            s.push(q.remove());
+        }
+        // s: [Парні] (у правильному порядку), q: [Непарні]
 
-        // 3. Зсунути непарні елементи (їх кількість: initialSize - evens)
-        // щоб парні опинилися на початку.
-        int odds = initialSize - evens;
-        for (int i = 0; i < odds; i++) {
-            q.add(q.remove()); // Непарні переміщуються в кінець
+        // 4. Повертаємо парні назад у чергу
+        // q: [Непарні] [Парні]
+        while (!s.isEmpty()) {
+            q.add(s.pop());
         }
 
-        // Фінальний порядок: [Парні], [Непарні]
+        // 5. Переміщуємо непарні на кінець.
+        int odds = initialSize - evens;
+        for (int i = 0; i < odds; i++) {
+            q.add(q.remove());
+        }
+        // q: [Парні] [Непарні]
     }
 
     // --- Task 9: maxLength ---
